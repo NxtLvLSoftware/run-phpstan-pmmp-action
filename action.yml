@@ -100,7 +100,7 @@ runs:
         pmmp-version: ${{ inputs.pmmp-version }}
         install-path: ${{ inputs.pmmp-source-dir }}
     - name: Run PHPStan Analysis
-      uses: ./run-phpstan
+      uses: ./run-phpstan-action
       with:
         executable: "./bin/phpstan/phpstan.phar"
         php: "./bin/bin/php"

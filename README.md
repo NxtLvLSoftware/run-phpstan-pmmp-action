@@ -34,7 +34,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout source code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Run PHPStan
         uses: nxtlvlsoftware/run-phpstan-pmmp-action@v1
 ```
@@ -53,7 +53,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout source code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - uses: nxtlvlsoftware/run-phpstan-pmmp-action@v1
         with:
           analyse: src
