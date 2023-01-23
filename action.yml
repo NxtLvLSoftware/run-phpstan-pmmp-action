@@ -1,0 +1,116 @@
+inputs:
+  php-version:
+    description: |
+      Specifies the version of php to use.
+    required: false
+    default: 8.0.18
+  phpstan-version:
+    description: |
+      Specifies the version of phpstan to use.
+    required: false
+    default: 1.8.2
+  pmmp-version:
+    description: |
+      Specifies the version of pocketmine source to analyse against.
+    required: false
+    default: latest
+  pmmp-source-dir:
+    description: |
+      Specifies the directory to install pocketmine sources to.
+    required: false
+    default: "./pocketmine"
+  analyse:
+    description: |
+      A space seperated list of paths to analyse.
+    required: false
+    default: undefined
+  level:
+    description: |
+      Specifies the rule level to run. https://phpstan.org/user-guide/rule-levels
+
+      Possible values: 1-9
+    required: false
+    default: 9
+  config:
+    description: |
+      Path to phpstan configuration file. Relative paths are resolved based on the current working directory.
+    required: false
+    default: "./pocketmine/phpstan/phpstan.neon.dist"
+  memory-limit:
+    description: |
+      Specifies the memory limit in the same format php.ini accepts.
+    required: false
+    default: 1G
+  no-progress:
+    description: |
+      Turns off the progress bar.
+    required: false
+    default: "true"
+  debug:
+    description: |
+      Instead of the progress bar, it outputs lines with each analysed file before its analysis.
+    required: false
+    default: ""
+  quiet:
+    description: |
+      Silences all the output. Useful if you’re interested only in the exit code.
+    required: false
+    default: ""
+  autoload-file:
+    description: |
+      If your application uses a custom autoloader, you should set it up and register in a PHP file that is
+      passed to this CLI option. Relative paths are resolved based on the current working directory.
+    required: false
+    default: "./pocketmine/phpstan/vendor/autoload.php"
+  error-format:
+    description: |
+      Specifies a custom error formatter. https://phpstan.org/user-guide/output-format
+    required: false
+    default: github
+  ansi:
+    description: |
+      Overrides the auto-detection of whether colors should be used in the output and how nice the progress bar should be.
+    required: false
+    default: ""
+
+name: Setup PHPStan Action
+description: GitHub action for setting up phpstan in an actions environment.
+author: NxtLvLSoftware Solutions
+branding:
+  icon: settings
+  color: blue
+runs:
+  using: composite
+  steps:
+    - name: Build and prepare PHP cache
+      uses: pmmp/setup-php-action@7e0f5f0a95e9d45d1d5fab0e1ee7555fa3b04339
+      with:
+        php-version: ${{ inputs.php-version }}
+        install-path: "./bin"
+    - name: Install PHPStan
+      env:
+        GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}
+      uses: ./setup-phpstan-action
+      with:
+        version: ${{ inputs.phpstan-version }}
+        install-path: "./bin/phpstan"
+    - name: Setup PocketMine Sources
+      uses: ./setup-pmmp-phpstan-env-action
+      with:
+        pmmp-version: ${{ inputs.pmmp-version }}
+        install-path: ${{ inputs.pmmp-source-dir }}
+    - name: Run PHPStan Analysis
+      uses: ./run-phpstan
+      with:
+        executable: "./bin/phpstan/phpstan.phar"
+        php: "./bin/bin/php"
+        analyse: ${{ inputs.analyse }}
+        level: ${{ inputs.level }}
+        config: ${{ inputs.config }}
+        memory-limit: ${{ inputs.memory-limit }}
+        no-progress: ${{ inputs.no-progress }}
+        debug: ${{ inputs.debug }}
+        quiet: ${{ inputs.quiet }}
+        autoload-file: ${{ inputs.autoload-file }}
+        error-format: ${{ inputs.error-format }}
+        ansi: ${{ inputs.ansi }}
