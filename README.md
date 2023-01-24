@@ -63,3 +63,6 @@ jobs:
           phpstan-version: 1.8.2
           pmmp-version: 4.6.1
 ```
+
+## License
+`nxtlvlsoftware/tar-ops-action` is open-sourced software licensed under the [MIT license](LICENSE).
