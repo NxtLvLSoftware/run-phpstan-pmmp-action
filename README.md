@@ -31,7 +31,7 @@ on: [ push ]
 jobs:
   test-code:
     name: Run Plugin Tests
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04 # pmmp-php-build doesn't work on ubuntu-latest yet
     steps:
       - name: Checkout source code
         uses: actions/checkout@v3
@@ -50,7 +50,7 @@ on: [ push ]
 jobs:
   test-code:
     name: Run Plugin Tests
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04 # pmmp-php-build doesn't work on ubuntu-latest yet
     steps:
       - name: Checkout source code
         uses: actions/checkout@v3
