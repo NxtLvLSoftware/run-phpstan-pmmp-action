@@ -73,7 +73,7 @@ inputs:
     required: false
     default: ""
 
-name: Run PHPStan Action
+name: Run PHPStan PMMP Action
 description: GitHub action for running phpstan analysis against PocketMine-MP plugin sources.
 author: NxtLvLSoftware Solutions
 branding:
