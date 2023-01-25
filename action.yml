@@ -95,7 +95,9 @@ runs:
         version: ${{ inputs.phpstan-version }}
         install-path: "./bin/phpstan"
     - name: Setup PocketMine Sources
-      uses: nxtlvlsoftware/setup-pmmp-phpstan-env-action@v1
+      uses: ./setup-pmmp-phpstan-env-action
+      env:
+        GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}
       with:
         pmmp-version: ${{ inputs.pmmp-version }}
         install-path: ${{ inputs.pmmp-source-dir }}
