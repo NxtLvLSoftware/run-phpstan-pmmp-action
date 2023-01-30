@@ -37,10 +37,15 @@ jobs:
         uses: actions/checkout@v3
       - name: Run PHPStan
         uses: nxtlvlsoftware/run-phpstan-pmmp-action@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
 
 This example will run the analysis with the default settings against any code in the `src` directory. We aim to keep the
 default phpstan version in-sync with whatever PocketMine is currently using, pull requests are welcome to maintain this.
+
+Forwarding the `$GIHUB_TOKEN` environment variable is required to properly configure PocketMine and PHPStan as we
+interact with the GitHub API to fetch version information.
 
 Or to lock the versions of any required tools/executables to known versions:
 
@@ -55,6 +60,8 @@ jobs:
       - name: Checkout source code
         uses: actions/checkout@v3
       - uses: nxtlvlsoftware/run-phpstan-pmmp-action@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           analyse: src
           config: tests/phpstan/action.phpstan.neon
