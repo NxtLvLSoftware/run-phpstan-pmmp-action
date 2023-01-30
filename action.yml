@@ -90,19 +90,19 @@ runs:
     - name: Install PHPStan
       env:
         GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}
-      uses: nxtlvlsoftware/setup-phpstan-action@v1.0.1
+      uses: nxtlvlsoftware/setup-phpstan-action@v1.0.2
       with:
         version: ${{ inputs.phpstan-version }}
         install-path: "./bin/phpstan"
     - name: Setup PocketMine Sources
-      uses: nxtlvlsoftware/setup-pmmp-phpstan-env-action@v1.0.1
+      uses: nxtlvlsoftware/setup-pmmp-phpstan-env-action@v1.0.2
       env:
         GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}
       with:
         pmmp-version: ${{ inputs.pmmp-version }}
         install-path: ${{ inputs.pmmp-source-dir }}
     - name: Run PHPStan Analysis
-      uses: nxtlvlsoftware/run-phpstan-action@v1
+      uses: nxtlvlsoftware/run-phpstan-action@v1.0.1
       with:
         executable: "./bin/phpstan/phpstan.phar"
         php: "./bin/bin/php"
